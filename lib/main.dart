@@ -1,3 +1,4 @@
+import 'dart:math';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -51,7 +52,7 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       body: Center(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: <Widget>[
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -77,6 +78,31 @@ class _MyHomePageState extends State<MyHomePage> {
                 Image.asset("assets/images/axis.jpg", width: 130),
               ],
             ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const Text("x-Axis:", style: TextStyle(color: Colors.red)),
+                Slider(
+                  value: angleX,
+                  min: -2 * pi,
+                  max: 2 * pi,
+                  onChanged: (value) {
+                    setState(() {
+                      angleX = value;
+                    });
+                  },
+                ),
+              ],
+            ),
+            ElevatedButton(
+                onPressed: () {
+                  setState(() {
+                    angleX = 0;
+                    angleY = 0;
+                    angleZ = 0;
+                  });
+                },
+                child: const Text("Reset")),
           ],
         ),
       ),
