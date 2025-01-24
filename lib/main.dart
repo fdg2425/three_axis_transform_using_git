@@ -42,8 +42,16 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text(widget.title),
+        backgroundColor: Colors.blue,
+        foregroundColor: Colors.white,
+        title:
+            const Text("Transform with 3 axis", style: TextStyle(fontSize: 24)),
+        centerTitle: true,
+        leading: const Padding(
+          padding: EdgeInsets.all(8.0),
+          child: CircleAvatar(
+              foregroundImage: AssetImage("assets/images/flutter_logo.jpg")),
+        ),
       ),
       body: Center(
         child: Column(
