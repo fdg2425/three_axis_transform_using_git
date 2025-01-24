@@ -30,13 +30,9 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
+  double angleX = 0;
+  double angleY = 0;
+  double angleZ = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -57,20 +53,32 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headlineMedium,
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Transform(
+                  alignment: Alignment.center,
+                  transform: Matrix4.rotationZ(angleZ),
+                  child: Transform(
+                      alignment: Alignment.center,
+                      transform: Matrix4.rotationY(angleY),
+                      child: Transform(
+                        alignment: Alignment.center,
+                        transform: Matrix4.rotationX(angleX),
+                        child: ClipRRect(
+                            borderRadius:
+                                const BorderRadius.all(Radius.circular(20)),
+                            child: Image.asset(
+                                "assets/images/snoopy_laptop.jpg",
+                                width: 230)),
+                      )),
+                ),
+                const SizedBox(width: 20),
+                Image.asset("assets/images/axis.jpg", width: 130),
+              ],
             ),
           ],
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
       ),
     );
   }
