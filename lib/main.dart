@@ -1,5 +1,6 @@
-import 'dart:math';
 import 'package:flutter/material.dart';
+
+import 'axis_slider.dart';
 
 void main() {
   runApp(const MyApp());
@@ -78,21 +79,35 @@ class _MyHomePageState extends State<MyHomePage> {
                 Image.asset("assets/images/axis.jpg", width: 130),
               ],
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const Text("x-Axis:", style: TextStyle(color: Colors.red)),
-                Slider(
-                  value: angleX,
-                  min: -2 * pi,
-                  max: 2 * pi,
-                  onChanged: (value) {
-                    setState(() {
-                      angleX = value;
-                    });
-                  },
-                ),
-              ],
+            AxisSlider(
+              title: "x-axis",
+              color: Colors.red,
+              angle: angleX,
+              callback: (value) {
+                setState(() {
+                  angleX = value;
+                });
+              },
+            ),
+            AxisSlider(
+              title: "y-axis",
+              color: Colors.green,
+              angle: angleY,
+              callback: (value) {
+                setState(() {
+                  angleY = value;
+                });
+              },
+            ),
+            AxisSlider(
+              title: "z-axis",
+              color: Colors.blue,
+              angle: angleZ,
+              callback: (value) {
+                setState(() {
+                  angleZ = value;
+                });
+              },
             ),
             ElevatedButton(
                 onPressed: () {
