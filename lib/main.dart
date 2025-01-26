@@ -31,9 +31,9 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  double angleX = 0;
-  double angleY = 0;
-  double angleZ = 0;
+  var boxedAngleX = BoxedValue<double>(0);
+  var boxedAngleY = BoxedValue<double>(0);
+  var boxedAngleZ = BoxedValue<double>(0);
 
   @override
   Widget build(BuildContext context) {
@@ -59,13 +59,13 @@ class _MyHomePageState extends State<MyHomePage> {
               children: [
                 Transform(
                   alignment: Alignment.center,
-                  transform: Matrix4.rotationZ(angleZ),
+                  transform: Matrix4.rotationZ(boxedAngleZ.value),
                   child: Transform(
                       alignment: Alignment.center,
-                      transform: Matrix4.rotationY(angleY),
+                      transform: Matrix4.rotationY(boxedAngleY.value),
                       child: Transform(
                         alignment: Alignment.center,
-                        transform: Matrix4.rotationX(angleX),
+                        transform: Matrix4.rotationX(boxedAngleX.value),
                         child: ClipRRect(
                             borderRadius:
                                 const BorderRadius.all(Radius.circular(20)),
@@ -78,14 +78,15 @@ class _MyHomePageState extends State<MyHomePage> {
                 Image.asset("assets/images/axis.jpg", width: 130),
               ],
             ),
-            getAxisSlider("x-axis", Colors.red, angleX),
-            getAxisSlider("y-axis", Colors.green, angleY),
+            getAxisSlider("x-axis", Colors.red, boxedAngleX),
+            getAxisSlider("y-axis", Colors.green, boxedAngleY),
+            getAxisSlider("z-axis", Colors.blue, boxedAngleZ),
             ElevatedButton(
                 onPressed: () {
                   setState(() {
-                    angleX = 0;
-                    angleY = 0;
-                    angleZ = 0;
+                    boxedAngleX.value = 0;
+                    boxedAngleY.value = 0;
+                    boxedAngleZ.value = 0;
                   });
                 },
                 child: const Text("Reset")),
@@ -95,18 +96,18 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
-  Row getAxisSlider(String title, Color color, double angle) {
+  Row getAxisSlider(String title, Color color, BoxedValue<double> angle) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Text(title, style: TextStyle(color: color)),
         Slider(
-          value: angle,
+          value: angle.value,
           min: -2 * pi,
           max: 2 * pi,
           onChanged: (value) {
             setState(() {
-              angle = value;
+              angle.value = value;
             });
           },
         ),
@@ -114,3 +115,9 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 }
+
+class BoxedValue<T> {
+  BoxedValue(this.value);
+  T value;
+}
+
