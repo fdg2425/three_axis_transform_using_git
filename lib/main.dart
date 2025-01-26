@@ -78,21 +78,35 @@ class _MyHomePageState extends State<MyHomePage> {
                 Image.asset("assets/images/axis.jpg", width: 130),
               ],
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const Text("x-Axis:", style: TextStyle(color: Colors.red)),
-                Slider(
-                  value: angleX,
-                  min: -2 * pi,
-                  max: 2 * pi,
-                  onChanged: (value) {
-                    setState(() {
-                      angleX = value;
-                    });
-                  },
-                ),
-              ],
+            AxisSlider(
+              title: "x-axis",
+              color: Colors.red,
+              angle: angleX,
+              callback: (value) {
+                setState(() {
+                  angleX = value;
+                });
+              },
+            ),
+            AxisSlider(
+              title: "y-axis",
+              color: Colors.green,
+              angle: angleY,
+              callback: (value) {
+                setState(() {
+                  angleY = value;
+                });
+              },
+            ),
+            AxisSlider(
+              title: "z-axis",
+              color: Colors.blue,
+              angle: angleZ,
+              callback: (value) {
+                setState(() {
+                  angleZ = value;
+                });
+              },
             ),
             ElevatedButton(
                 onPressed: () {
@@ -106,6 +120,37 @@ class _MyHomePageState extends State<MyHomePage> {
           ],
         ),
       ),
+    );
+  }
+}
+
+class AxisSlider extends StatelessWidget {
+  const AxisSlider({
+    super.key,
+    required this.title,
+    required this.color,
+    required this.angle,
+    required this.callback,
+  });
+
+  final String title;
+  final Color color;
+  final double angle;
+  final Function(double value) callback;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Text(title, style: TextStyle(color: color)),
+        Slider(
+          value: angle,
+          min: -2 * pi,
+          max: 2 * pi,
+          onChanged: callback,
+        ),
+      ],
     );
   }
 }
