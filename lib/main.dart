@@ -78,22 +78,8 @@ class _MyHomePageState extends State<MyHomePage> {
                 Image.asset("assets/images/axis.jpg", width: 130),
               ],
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const Text("x-Axis:", style: TextStyle(color: Colors.red)),
-                Slider(
-                  value: angleX,
-                  min: -2 * pi,
-                  max: 2 * pi,
-                  onChanged: (value) {
-                    setState(() {
-                      angleX = value;
-                    });
-                  },
-                ),
-              ],
-            ),
+            getAxisSlider("x-axis", Colors.red, angleX),
+            getAxisSlider("y-axis", Colors.green, angleY),
             ElevatedButton(
                 onPressed: () {
                   setState(() {
@@ -106,6 +92,25 @@ class _MyHomePageState extends State<MyHomePage> {
           ],
         ),
       ),
+    );
+  }
+
+  Row getAxisSlider(String title, Color color, double angle) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Text(title, style: TextStyle(color: color)),
+        Slider(
+          value: angle,
+          min: -2 * pi,
+          max: 2 * pi,
+          onChanged: (value) {
+            setState(() {
+              angle = value;
+            });
+          },
+        ),
+      ],
     );
   }
 }
