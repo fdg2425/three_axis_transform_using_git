@@ -23,6 +23,7 @@ class AxisSlider extends StatelessWidget {
       children: [
         Text(title, style: TextStyle(color: color)),
         Slider(
+          activeColor: color,
           value: angle,
           min: -2 * pi,
           max: 2 * pi,
