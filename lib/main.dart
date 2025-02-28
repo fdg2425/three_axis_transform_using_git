@@ -39,6 +39,10 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    var mTransform = Matrix4.identity();
+    mTransform.multiply(Matrix4.rotationX(angleX));
+    mTransform.multiply(Matrix4.rotationY(angleY));
+    mTransform.multiply(Matrix4.rotationZ(angleZ));
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.blue,
@@ -61,20 +65,13 @@ class _MyHomePageState extends State<MyHomePage> {
               children: [
                 Transform(
                   alignment: Alignment.center,
-                  transform: Matrix4.rotationZ(angleZ),
-                  child: Transform(
-                      alignment: Alignment.center,
-                      transform: Matrix4.rotationY(angleY),
-                      child: Transform(
-                        alignment: Alignment.center,
-                        transform: Matrix4.rotationX(angleX),
-                        child: ClipRRect(
-                            borderRadius:
-                                const BorderRadius.all(Radius.circular(20)),
-                            child: Image.asset(
-                                "assets/images/snoopy_laptop.jpg",
-                                width: 230)),
-                      )),
+                  transform: mTransform,
+                  child: ClipRRect(
+                      borderRadius:
+                          const BorderRadius.all(Radius.circular(20)),
+                      child: Image.asset(
+                          "assets/images/snoopy_laptop.jpg",
+                          width: 230)),
                 ),
                 const SizedBox(width: 20),
                 Image.asset("assets/images/axis.jpg", width: 130),
