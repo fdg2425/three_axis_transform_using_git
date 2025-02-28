@@ -36,13 +36,19 @@ class _MyHomePageState extends State<MyHomePage> {
   double angleX = 0;
   double angleY = 0;
   double angleZ = 0;
+  double moveX = 0;
 
   @override
   Widget build(BuildContext context) {
+    var mTranslate = Matrix4.identity();
+    mTranslate.setEntry(0, 3, moveX * 20);
+
     var mTransform = Matrix4.identity();
-    mTransform.multiply(Matrix4.rotationX(angleX));
+   mTransform.multiply(Matrix4.rotationX(angleX));
     mTransform.multiply(Matrix4.rotationY(angleY));
     mTransform.multiply(Matrix4.rotationZ(angleZ));
+     mTransform.multiply(mTranslate);
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.blue,
@@ -67,10 +73,8 @@ class _MyHomePageState extends State<MyHomePage> {
                   alignment: Alignment.center,
                   transform: mTransform,
                   child: ClipRRect(
-                      borderRadius:
-                          const BorderRadius.all(Radius.circular(20)),
-                      child: Image.asset(
-                          "assets/images/snoopy_laptop.jpg",
+                      borderRadius: const BorderRadius.all(Radius.circular(20)),
+                      child: Image.asset("assets/images/snoopy_laptop.jpg",
                           width: 230)),
                 ),
                 const SizedBox(width: 20),
@@ -107,12 +111,23 @@ class _MyHomePageState extends State<MyHomePage> {
                 });
               },
             ),
+            AxisSlider(
+              title: "moveX",
+              color: Colors.pink,
+              angle: moveX,
+              callback: (value) {
+                setState(() {
+                  moveX = value;
+                });
+              },
+            ),
             ElevatedButton(
                 onPressed: () {
                   setState(() {
                     angleX = 0;
                     angleY = 0;
                     angleZ = 0;
+                    moveX = 0;
                   });
                 },
                 child: const Text("Reset")),
