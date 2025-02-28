@@ -141,7 +141,7 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
             AxisSlider(
               title: "shearX",
-              color: Colors.black,
+              color: Colors.grey,
               angle: shearX,
               callback: (value) {
                 setState(() {
