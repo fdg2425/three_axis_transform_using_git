@@ -80,7 +80,7 @@ class _MyHomePageState extends State<MyHomePage> {
                           width: 230)),
                 ),
                 const SizedBox(width: 20),
-                Image.asset("assets/images/axis.jpg", width: 130),
+                Image.asset("assets/images/axis_y_down.jpg", width: 130),
               ],
             ),
             AxisSlider(
