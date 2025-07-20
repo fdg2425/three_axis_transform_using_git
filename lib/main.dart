@@ -87,70 +87,84 @@ class _MyHomePageState extends State<MyHomePage> {
                       child: Image.asset("assets/images/snoopy_laptop.jpg",
                           width: 230)),
                 ),
-                const SizedBox(width: 20),
+                const SizedBox(width: 40),
                 Image.asset("assets/images/axis_y_down.jpg", width: 130),
               ],
             ),
-            AngleSlider(
-              title: "x-axis",
-              color: Colors.red,
-              angle: angleX,
-              callback: (value) {
-                setState(() {
-                  angleX = value;
-                });
-              },
-            ),
-            AngleSlider(
-              title: "y-axis",
-              color: Colors.green,
-              angle: angleY,
-              callback: (value) {
-                setState(() {
-                  angleY = value;
-                });
-              },
-            ),
-            AngleSlider(
-              title: "z-axis",
-              color: Colors.blue,
-              angle: angleZ,
-              callback: (value) {
-                setState(() {
-                  angleZ = value;
-                });
-              },
-            ),
-            AngleSlider(
-              title: "moveX",
-              color: Colors.pink,
-              angle: moveX,
-              callback: (value) {
-                setState(() {
-                  moveX = value;
-                });
-              },
-            ),
-            AngleSlider(
-              title: "moveY",
-              color: Colors.red,
-              angle: moveY,
-              callback: (value) {
-                setState(() {
-                  moveY = value;
-                });
-              },
-            ),
-            AngleSlider(
-              title: "shearX",
-              color: Colors.grey,
-              angle: shearX,
-              minMaxAbsolute: pi,
-              callback: (value) {
-                setState(() {
-                  shearX = value;
-                });
-              },
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Column(
+                  children: [
+                    AngleSlider(
+                      title: "rotateX",
+                      color: Colors.red,
+                      angle: angleX,
+                      callback: (value) {
+                        setState(() {
+                          angleX = value;
+                        });
+                      },
+                    ),
+                    AngleSlider(
+                      title: "rotateY",
+                      color: Colors.green,
+                      angle: angleY,
+                      callback: (value) {
+                        setState(() {
+                          angleY = value;
+                        });
+                      },
+                    ),
+                    AngleSlider(
+                      title: "rotateZ",
+                      color: Colors.blue,
+                      angle: angleZ,
+                      callback: (value) {
+                        setState(() {
+                          angleZ = value;
+                        });
+                      },
+                    ),
+                  ],
+                ),
+                const SizedBox(width: 40),
+                Column(
+                  children: [
+                    AngleSlider(
+                      title: "moveX",
+                      color: Colors.red,
+                      angle: moveX,
+                      callback: (value) {
+                        setState(() {
+                          moveX = value;
+                        });
+                      },
+                    ),
+                    AngleSlider(
+                      title: "moveY",
+                      color: Colors.green,
+                      angle: moveY,
+                      callback: (value) {
+                        setState(() {
+                          moveY = value;
+                        });
+                      },
+                    ),
+                    AngleSlider(
+                      title: "shearX",
+                      color: Colors.pink,
+                      angle: shearX,
+                      minMaxAbsolute: pi,
+                      callback: (value) {
+                        setState(() {
+                          shearX = value;
+                        });
+                      },
+                    ),
+                  ],
+                ),
+              ],
             ),
             ElevatedButton(
                 onPressed: () {

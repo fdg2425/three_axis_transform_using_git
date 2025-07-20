@@ -19,17 +19,25 @@ class AngleSlider extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
+    return Column(
       children: [
-        Text(title, style: TextStyle(color: color)),
-        Slider(
-          activeColor: color,
-          value: angle,
-          min: -minMaxAbsolute,
-          max: minMaxAbsolute,
-          onChanged: callback,
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(title, style: TextStyle(color: color)),
+            Slider(
+              activeColor: color,
+              value: angle,
+              min: -minMaxAbsolute,
+              max: minMaxAbsolute,
+              onChanged: callback,
+            ),
+          ],
         ),
+        Text(
+            "Radians: ${angle.toStringAsFixed(2)} ≙ ${((angle / pi) * 180).toStringAsFixed(1)}°",
+            style: TextStyle(fontSize: 12)),
+        SizedBox(height: 20)
       ],
     );
   }
