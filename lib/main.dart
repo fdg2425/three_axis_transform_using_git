@@ -97,7 +97,13 @@ class _MyHomePageState extends State<MyHomePage> {
                           width: 230)),
                 ),
                 const SizedBox(width: 40),
-                Image.asset("assets/images/axis_y_down.jpg", width: 130),
+                Opacity(
+                    opacity: 0.7,
+                    child: ClipRRect(
+                      borderRadius: const BorderRadius.all(Radius.circular(20)),
+                      child: Image.asset("assets/images/axis_y_down.jpg",
+                          width: 130),
+                    )),
               ],
             ),
             Row(
