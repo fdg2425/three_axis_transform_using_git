@@ -11,7 +11,7 @@ class AnimationProvider {
   final Function() callback;
   bool translationFirst;
   Timer? _timer;
-  double _value = 0;
+  double _value = 1;
   DateTime _startTime = DateTime.now();
 
   double get rotateAndShearFactor {
