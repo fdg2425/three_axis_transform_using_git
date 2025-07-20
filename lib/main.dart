@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 
 import 'angle_slider.dart';
+import 'animation_provider.dart';
 import 'pixel_slider.dart';
 
 void main() {
@@ -42,29 +43,53 @@ class _MyHomePageState extends State<MyHomePage> {
   double moveX = 0;
   double moveY = 0;
   double shearX = 0;
-  bool translationFirst = false;
+  bool _translationFirst = false;
+  late AnimationProvider _animationProvider;
+
+  @override
+  void initState() {
+    super.initState();
+    _animationProvider = AnimationProvider(
+        duration: const Duration(seconds: 2),
+        translationFirst: _translationFirst,
+        callback: refresh);
+  }
+
+  @override
+  void dispose() {
+    _animationProvider.stopAnimation();
+    super.dispose();
+  }
+
+  void refresh() {
+    setState(() {});
+  }
 
   @override
   Widget build(BuildContext context) {
     var mShear = Matrix4.identity();
-    mShear.setEntry(0, 1, tan(shearX));
+    mShear.setEntry(
+        0, 1, tan(shearX * _animationProvider.rotateAndShearFactor));
 
     var mTranslate = Matrix4.identity();
-    mTranslate.setEntry(0, 3, moveX);
-    mTranslate.setEntry(1, 3, moveY);
+    mTranslate.setEntry(0, 3, moveX * _animationProvider.moveFactor);
+    mTranslate.setEntry(1, 3, moveY * _animationProvider.moveFactor);
 
     var mTransform = Matrix4.identity();
-    if (!translationFirst) {
+    if (!_translationFirst) {
       mTransform.multiply(mTranslate);
     }
 
     mTransform.multiply(mShear);
-    mTransform.multiply(Matrix4.rotationX(angleX));
-    mTransform.multiply(Matrix4.rotationY(angleY));
-    mTransform.multiply(Matrix4.rotationZ(angleZ));
+    mTransform.multiply(
+        Matrix4.rotationX(angleX * _animationProvider.rotateAndShearFactor));
+    mTransform.multiply(
+        Matrix4.rotationY(angleY * _animationProvider.rotateAndShearFactor));
+    mTransform.multiply(
+        Matrix4.rotationZ(angleZ * _animationProvider.rotateAndShearFactor));
 
     // the right-most factor in the matrix multiplication is the first  the vector gets multiplied with
-    if (translationFirst) {
+    if (_translationFirst) {
       mTransform.multiply(mTranslate);
     }
 
@@ -186,29 +211,43 @@ class _MyHomePageState extends State<MyHomePage> {
               width: 500,
               child: SwitchListTile(
                 title: Text(
-                    "Transformation sequence: move ${translationFirst ? "before" : "after"} rotate & shear",
+                    "Transformation sequence: move ${_translationFirst ? "before" : "after"} rotate & shear",
                     style: const TextStyle(fontSize: 14)),
                 //controlAffinity: ListTileControlAffinity.leading,
-                value: translationFirst,
+                value: _translationFirst,
                 onChanged: (value) {
                   setState(() {
-                    translationFirst = value;
+                    _translationFirst = value;
+                    _animationProvider.translationFirst = value;
                   });
                 },
               ),
             ),
-            ElevatedButton(
-                onPressed: () {
-                  setState(() {
-                    angleX = 0;
-                    angleY = 0;
-                    angleZ = 0;
-                    moveX = 0;
-                    moveY = 0;
-                    shearX = 0;
-                  });
-                },
-                child: const Text("Reset")),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                ElevatedButton(
+                    onPressed: () {
+                      setState(() {
+                        angleX = 0;
+                        angleY = 0;
+                        angleZ = 0;
+                        moveX = 0;
+                        moveY = 0;
+                        shearX = 0;
+                      });
+                    },
+                    child: const Text("Reset")),
+                ElevatedButton(
+                    onPressed: () {
+                      setState(() {
+                        _animationProvider.stopAnimation();
+                        _animationProvider.startAnimation();
+                      });
+                    },
+                    child: const Text("Animate")),
+              ],
+            ),
           ],
         ),
       ),
