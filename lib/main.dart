@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 
 import 'angle_slider.dart';
+import 'pixel_slider.dart';
 
 void main() {
   runApp(const MyApp());
@@ -48,8 +49,8 @@ class _MyHomePageState extends State<MyHomePage> {
     mShear.setEntry(0, 1, tan(shearX));
 
     var mTranslate = Matrix4.identity();
-    mTranslate.setEntry(0, 3, moveX * 20);
-    mTranslate.setEntry(1, 3, moveY * 20);
+    mTranslate.setEntry(0, 3, moveX);
+    mTranslate.setEntry(1, 3, moveY);
 
     var mTransform = Matrix4.identity();
     mTransform.multiply(mShear);
@@ -131,20 +132,20 @@ class _MyHomePageState extends State<MyHomePage> {
                 const SizedBox(width: 40),
                 Column(
                   children: [
-                    AngleSlider(
+                    PixelSlider(
                       title: "moveX",
                       color: Colors.red,
-                      angle: moveX,
+                      offset: moveX,
                       callback: (value) {
                         setState(() {
                           moveX = value;
                         });
                       },
                     ),
-                    AngleSlider(
+                    PixelSlider(
                       title: "moveY",
                       color: Colors.green,
-                      angle: moveY,
+                      offset: moveY,
                       callback: (value) {
                         setState(() {
                           moveY = value;
