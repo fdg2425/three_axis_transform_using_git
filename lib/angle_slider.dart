@@ -36,8 +36,8 @@ class AngleSlider extends StatelessWidget {
         ),
         Text(
             "Radians: ${angle.toStringAsFixed(2)} ≙ ${((angle / pi) * 180).toStringAsFixed(1)}°",
-            style: TextStyle(fontSize: 12)),
-        SizedBox(height: 20)
+            style: const TextStyle(fontSize: 12)),
+        const SizedBox(height: 20)
       ],
     );
   }
