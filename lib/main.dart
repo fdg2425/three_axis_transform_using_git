@@ -1,6 +1,8 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 
-import 'axis_slider.dart';
+import 'angle_slider.dart';
 
 void main() {
   runApp(const MyApp());
@@ -43,19 +45,19 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     var mShear = Matrix4.identity();
-    mShear.setEntry(0, 1, shearX);
+    mShear.setEntry(0, 1, tan(shearX));
 
     var mTranslate = Matrix4.identity();
     mTranslate.setEntry(0, 3, moveX * 20);
     mTranslate.setEntry(1, 3, moveY * 20);
 
     var mTransform = Matrix4.identity();
-   mTransform.multiply(mShear);
+    mTransform.multiply(mShear);
 
-   mTransform.multiply(Matrix4.rotationX(angleX));
+    mTransform.multiply(Matrix4.rotationX(angleX));
     mTransform.multiply(Matrix4.rotationY(angleY));
     mTransform.multiply(Matrix4.rotationZ(angleZ));
-     mTransform.multiply(mTranslate);
+    mTransform.multiply(mTranslate);
 
     return Scaffold(
       appBar: AppBar(
@@ -89,7 +91,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 Image.asset("assets/images/axis_y_down.jpg", width: 130),
               ],
             ),
-            AxisSlider(
+            AngleSlider(
               title: "x-axis",
               color: Colors.red,
               angle: angleX,
@@ -99,7 +101,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 });
               },
             ),
-            AxisSlider(
+            AngleSlider(
               title: "y-axis",
               color: Colors.green,
               angle: angleY,
@@ -109,7 +111,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 });
               },
             ),
-            AxisSlider(
+            AngleSlider(
               title: "z-axis",
               color: Colors.blue,
               angle: angleZ,
@@ -119,7 +121,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 });
               },
             ),
-            AxisSlider(
+            AngleSlider(
               title: "moveX",
               color: Colors.pink,
               angle: moveX,
@@ -129,7 +131,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 });
               },
             ),
-            AxisSlider(
+            AngleSlider(
               title: "moveY",
               color: Colors.red,
               angle: moveY,
@@ -139,10 +141,11 @@ class _MyHomePageState extends State<MyHomePage> {
                 });
               },
             ),
-            AxisSlider(
+            AngleSlider(
               title: "shearX",
               color: Colors.grey,
               angle: shearX,
+              minMaxAbsolute: pi,
               callback: (value) {
                 setState(() {
                   shearX = value;

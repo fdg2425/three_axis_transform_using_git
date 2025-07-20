@@ -2,19 +2,20 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 
-class AxisSlider extends StatelessWidget {
-  const AxisSlider({
-    super.key,
-    required this.title,
-    required this.color,
-    required this.angle,
-    required this.callback,
-  });
+class AngleSlider extends StatelessWidget {
+  const AngleSlider(
+      {super.key,
+      required this.title,
+      required this.color,
+      required this.angle,
+      required this.callback,
+      this.minMaxAbsolute = 2 * pi});
 
   final String title;
   final Color color;
   final double angle;
   final Function(double value) callback;
+  final double minMaxAbsolute;
 
   @override
   Widget build(BuildContext context) {
@@ -25,8 +26,8 @@ class AxisSlider extends StatelessWidget {
         Slider(
           activeColor: color,
           value: angle,
-          min: -2 * pi,
-          max: 2 * pi,
+          min: -minMaxAbsolute,
+          max: minMaxAbsolute,
           onChanged: callback,
         ),
       ],
