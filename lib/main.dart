@@ -42,6 +42,7 @@ class _MyHomePageState extends State<MyHomePage> {
   double moveX = 0;
   double moveY = 0;
   double shearX = 0;
+  bool translationFirst = false;
 
   @override
   Widget build(BuildContext context) {
@@ -53,12 +54,19 @@ class _MyHomePageState extends State<MyHomePage> {
     mTranslate.setEntry(1, 3, moveY);
 
     var mTransform = Matrix4.identity();
-    mTransform.multiply(mShear);
+    if (!translationFirst) {
+      mTransform.multiply(mTranslate);
+    }
 
+    mTransform.multiply(mShear);
     mTransform.multiply(Matrix4.rotationX(angleX));
     mTransform.multiply(Matrix4.rotationY(angleY));
     mTransform.multiply(Matrix4.rotationZ(angleZ));
-    mTransform.multiply(mTranslate);
+
+    // the right-most factor in the matrix multiplication is the first  the vector gets multiplied with
+    if (translationFirst) {
+      mTransform.multiply(mTranslate);
+    }
 
     return Scaffold(
       appBar: AppBar(
@@ -166,6 +174,22 @@ class _MyHomePageState extends State<MyHomePage> {
                   ],
                 ),
               ],
+            ),
+            Container(
+              alignment: Alignment.center,
+              width: 500,
+              child: SwitchListTile(
+                title: Text(
+                    "Transformation sequence: move ${translationFirst ? "before" : "after"} rotate & shear",
+                    style: const TextStyle(fontSize: 14)),
+                //controlAffinity: ListTileControlAffinity.leading,
+                value: translationFirst,
+                onChanged: (value) {
+                  setState(() {
+                    translationFirst = value;
+                  });
+                },
+              ),
             ),
             ElevatedButton(
                 onPressed: () {
