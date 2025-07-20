@@ -32,9 +32,9 @@ class PixelSlider extends StatelessWidget {
             ),
           ],
         ),
-        Text("Offset in pixel: ${offset.toStringAsFixed(0)}",
+        Text("offset in pixel: ${offset.toStringAsFixed(0)}",
             style: const TextStyle(fontSize: 12)),
-        const SizedBox(height: 20)
+        const SizedBox(height: 10)
       ],
     );
   }

@@ -95,17 +95,24 @@ class _MyHomePageState extends State<MyHomePage> {
 
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.blue,
-        foregroundColor: Colors.white,
-        title:
-            const Text("Transform with 3 axis", style: TextStyle(fontSize: 24)),
-        centerTitle: true,
-        leading: const Padding(
-          padding: EdgeInsets.all(8.0),
-          child: CircleAvatar(
-              foregroundImage: AssetImage("assets/images/flutter_logo.jpg")),
-        ),
-      ),
+          backgroundColor: Colors.blue,
+          foregroundColor: Colors.white,
+          title: const Text("3D Transformations with Matrix4",
+              style: TextStyle(fontSize: 24)),
+          centerTitle: true,
+          leading: const Padding(
+            padding: EdgeInsets.all(8.0),
+            child: CircleAvatar(
+                foregroundImage: AssetImage("assets/images/flutter_logo.jpg")),
+          ),
+          actions: [
+            Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: ClipRRect(
+                  borderRadius: const BorderRadius.all(Radius.circular(10)),
+                  child: Image.asset("assets/images/fdg_logo.png")),
+            ),
+          ]),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -224,8 +231,17 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
             ),
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
+                ElevatedButton(
+                    onPressed: () {
+                      setState(() {
+                        _animationProvider.stopAnimation();
+                        _animationProvider.startAnimation();
+                      });
+                    },
+                    child: const Text("Animate")),
+                SizedBox(width: 100),
                 ElevatedButton(
                     onPressed: () {
                       setState(() {
@@ -238,14 +254,6 @@ class _MyHomePageState extends State<MyHomePage> {
                       });
                     },
                     child: const Text("Reset")),
-                ElevatedButton(
-                    onPressed: () {
-                      setState(() {
-                        _animationProvider.stopAnimation();
-                        _animationProvider.startAnimation();
-                      });
-                    },
-                    child: const Text("Animate")),
               ],
             ),
           ],
